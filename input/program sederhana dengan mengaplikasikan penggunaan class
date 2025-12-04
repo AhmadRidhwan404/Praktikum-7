@@ -1,0 +1,125 @@
+class DaftarNilaiMahasiswa:
+    """Class untuk mengelola daftar nilai mahasiswa"""
+    
+    def __init__(self):
+        """Inisialisasi class dengan dictionary untuk menyimpan data"""
+        self.mahasiswa = {} 
+    
+    def find_key(self, nama):
+        for k in self.mahasiswa.keys():
+            if k.casefold() == nama.casefold():
+                return k
+        return None
+    
+    def tambah(self):
+        """method untuk menambah data mahasiswa"""
+        nama = input("Masukkan nama mahasiswa: ").strip()
+        if not nama:
+            print("Nama tidak boleh kosong.\n")
+            return
+        
+        try:
+            nilai = float(input("Masukkan nilai mahasiswa: "))
+        except ValueError:
+            print("Nilai harus berupa angka. Coba lagi.\n")
+            return
+        
+        existing = self.find_key(nama)
+        if existing:
+            self.mahasiswa[existing] = nilai
+            print(f"Data {existing} di-update menjadi nilai {nilai}.\n")
+        else:
+            self.mahasiswa[nama] = nilai
+            print(f"Data {nama} dengan nilai {nilai} berhasil ditambahkan.\n")
+    
+    def tampilkan(self):
+        """Method untuk menampilkan semua data mahasiswa"""
+        if not self.mahasiswa:
+            print("Tidak ada data mahasiswa.\n")
+            return
+        
+        print("\n" + "="*50)
+        print("DAFTAR NILAI MAHASISWA")
+        print("="*50)
+    
+        for nama, nilai in sorted(self.mahasiswa.items(), key=lambda x: x[1], reverse=True):
+            print(f"  {nama:<30}: {nilai:>8.2f}")
+        
+        # Tampilkan statistik
+        if self.mahasiswa:
+            nilai_list = list(self.mahasiswa.values())
+            rata_rata = sum(nilai_list) / len(nilai_list)
+            nilai_max = max(nilai_list)
+            nilai_min = min(nilai_list)
+            
+            print("="*50)
+            print(f"  Total mahasiswa: {len(self.mahasiswa)}")
+            print(f"  Nilai tertinggi: {nilai_max:.2f}")
+            print(f"  Nilai terendah: {nilai_min:.2f}")
+            print(f"  Rata-rata nilai: {rata_rata:.2f}")
+            print("="*50 + "\n")
+    
+    def hapus(self, nama):
+        """Method untuk menghapus data berdasarkan nama"""
+        key = self.find_key(nama)
+        if key:
+            del self.mahasiswa[key]
+            print(f"Data {key} berhasil dihapus.\n")
+        else:
+            print(f"Nama {nama} tidak ditemukan.\n")
+    
+    def ubah(self, nama):
+        """Method untuk mengubah data berdasarkan nama"""
+        key = self.find_key(nama)
+        if key:
+            try:
+                nilai_baru = float(input(f"Masukkan nilai baru untuk {key}: "))
+                self.mahasiswa[key] = nilai_baru
+                print(f"Nilai {key} berhasil diubah menjadi {nilai_baru}.\n")
+            except ValueError:
+                print("Nilai harus berupa angka. Coba lagi.\n")
+        else:
+            print(f"Nama {nama} tidak ditemukan.\n")
+
+
+def main():
+    daftar = DaftarNilaiMahasiswa()
+    
+    while True:
+        print("\n" + "="*50)
+        print("MENU DAFTAR NILAI MAHASISWA")
+        print("="*50)
+        print("1. Tambah data mahasiswa")
+        print("2. Tampilkan data mahasiswa")
+        print("3. Hapus data mahasiswa")
+        print("4. Ubah data mahasiswa")
+        print("5. Keluar")
+        print("="*50)
+        
+        pilihan = input("Pilih menu (1-5): ").strip()
+        
+        if pilihan == "1":
+            daftar.tambah()
+        elif pilihan == "2":
+            daftar.tampilkan()
+        elif pilihan == "3":
+            nama = input("Masukkan nama mahasiswa yang ingin dihapus: ").strip()
+            if nama:
+                daftar.hapus(nama)
+            else:
+                print("Nama tidak boleh kosong.\n")
+        elif pilihan == "4":
+            nama = input("Masukkan nama mahasiswa yang ingin diubah: ").strip()
+            if nama:
+                daftar.ubah(nama)
+            else:
+                print("Nama tidak boleh kosong.\n")
+        elif pilihan == "5":
+            print("Terima kasih! Program selesai.")
+            break
+        else:
+            print("Pilihan tidak valid. Coba lagi.\n")
+
+
+if __name__ == '__main__':
+    main()
