@@ -1,4 +1,5 @@
 **##Diagram Kelas**
+
 +--------------------------------------------------------+
 |                DaftarNilaiMahasiswa                    |
 +--------------------------------------------------------+
@@ -50,7 +51,7 @@ tampilkan()	Menampilkan seluruh data + statistik nilai
 hapus(nama)	Menghapus data berdasarkan nama
 ubah(nama)	Mengubah nilai mahasiswa
 
-2. Fungsi main()
+**2. Fungsi main()**
 Berisi:
 Menu utama
 Input pilihan menu
@@ -72,6 +73,7 @@ Setiap menu memanggil method yang sesuai dalam class.
 Program selesai setelah pengguna memilih opsi Keluar.
 
 **Contoh Output Program**
+
 
 ==================================================
 MENU DAFTAR NILAI MAHASISWA
